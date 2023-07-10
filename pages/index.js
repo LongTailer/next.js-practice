@@ -1,7 +1,18 @@
 import {posts} from '../data';
 import BlogPost from '../components/BlogPost';
+import axios from 'axios';
 
-export default function Home(){
+//APIからダミーデータを取得してpostsとしてコンポーネントに渡す
+export async function getServerSideProps() {
+    const response = await axios.get('http://localhost:3000/api/posts');
+    return {
+        props: {
+            posts: response.data
+        }
+    };
+}
+
+export default function Home({posts}){
     return (
         <div>
             <h1>ブログ一覧</h1>
@@ -19,6 +30,4 @@ export default function Home(){
         </div>
     );
 }
-// export default function Home() {
-//     return <div>Hello, world!</div>;
-//   }
+
